@@ -1,5 +1,3 @@
-# Congestion Tax Calculator
-
 ## Installation
 
 ```bash

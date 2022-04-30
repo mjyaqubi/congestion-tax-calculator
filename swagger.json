@@ -1,0 +1,188 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/calculate": {
+      "post": {
+        "operationId": "calculate",
+        "summary": "Calculate",
+        "description": "Congestion Tax Calculation",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalculateTaxRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculateTaxResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Internal communication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadGatewayResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Congestion Tax Calculator",
+    "description": "Congestion Tax Calculator | [swagger.json](swagger.json)",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CalculateTaxRequestDto": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "example": "Gothenburg"
+          },
+          "vehicle": {
+            "type": "string",
+            "example": "Car"
+          },
+          "times": {
+            "example": [
+              "2013-01-14 21:00:00",
+              "2013-01-15 21:00:00",
+              "2013-02-07 06:23:27",
+              "2013-02-07 15:27:00"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "city",
+          "vehicle",
+          "times"
+        ]
+      },
+      "CalculateTaxResponseDto": {
+        "type": "object",
+        "properties": {
+          "tax": {
+            "type": "number",
+            "example": "100"
+          }
+        },
+        "required": [
+          "tax"
+        ]
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Bad request"
+          },
+          "status": {
+            "type": "number",
+            "example": 400
+          }
+        }
+      },
+      "UnauthorizedResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Unauthorized request"
+          },
+          "status": {
+            "type": "number",
+            "example": 401
+          }
+        }
+      },
+      "InternalServerErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Internal Server Error"
+          },
+          "status": {
+            "type": "number",
+            "example": 500
+          }
+        }
+      },
+      "BadGatewayResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Bad gateway"
+          },
+          "status": {
+            "type": "number",
+            "example": 502
+          }
+        }
+      }
+    }
+  }
+}
